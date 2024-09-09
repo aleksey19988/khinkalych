@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private string $tableName = 'users';
+    private string $tableName = 'department_guests';
     /**
      * Run the migrations.
      */
@@ -14,15 +14,12 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
-            $table->string('first_name')->comment('Имя');
-            $table->string('last_name')->comment('Фамилия');
-            $table->timestamp('birthday')->comment('Дата рождения');
-            $table->timestamp('employment_date')->nullable()->comment('Дата приёма на работу');
-            $table->string('login')->unique()->comment('Логин (номер телефона)');
-            $table->string('password')->comment('Пароль');
-            $table->rememberToken();
+            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('guest_id');
             $table->timestamps();
 
+            $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('guest_id')->references('id')->on('guests');
             $table->softDeletes();
         });
     }

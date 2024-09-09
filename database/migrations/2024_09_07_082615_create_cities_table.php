@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private string $tableName = 'users';
+    private string $tableName = 'cities';
     /**
      * Run the migrations.
      */
@@ -14,15 +14,11 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
-            $table->string('first_name')->comment('Имя');
-            $table->string('last_name')->comment('Фамилия');
-            $table->timestamp('birthday')->comment('Дата рождения');
-            $table->timestamp('employment_date')->nullable()->comment('Дата приёма на работу');
-            $table->string('login')->unique()->comment('Логин (номер телефона)');
-            $table->string('password')->comment('Пароль');
-            $table->rememberToken();
+            $table->string('title')->comment('Наименование города');
+            $table->unsignedBigInteger('region_id')->comment('ID региона');
             $table->timestamps();
 
+            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
             $table->softDeletes();
         });
     }
