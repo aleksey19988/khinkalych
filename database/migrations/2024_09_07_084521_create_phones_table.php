@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('number')->comment('Номер телефона');
+            $table->unsignedBigInteger('number')->comment('Номер телефона');
             $table->unsignedBigInteger('guest_id')->comment('ID гостя');
             $table->timestamps();
 
-            $table->foreign('guest_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('guest_id')->references('id')->on('guests')->onDelete('cascade');
             $table->softDeletes();
         });
     }
