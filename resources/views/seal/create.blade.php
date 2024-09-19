@@ -96,6 +96,9 @@
                 <x-seal.add-name-block/>
             @endif
             <button type="submit" id="add-seal-form-submit-btn" class="
+            transition
+            ease-in-out
+            duration-500
             flex
             justify-center
             align-middle
@@ -137,6 +140,9 @@
             <p class="mt-10 mb-5 text-2xl text-white w-full text-center">Не забудь сказать гостю, что это его {{ session('seals-count') }}-я печать 💫</p>
             <div class="buttons w-full flex justify-center pt-10">
                 <a class="
+                    transition
+                    ease-in-out
+                    duration-500
                     h-10
                     focus:outline-none
                     text-white
@@ -161,6 +167,9 @@
                     @method('delete')
                     <input type="hidden" name="sealId" value="{{ session('seal-id') ?? 0 }}">
                     <button type="submit" class="
+                    transition
+                    ease-in-out
+                    duration-500
                     h-10
                     focus:outline-none
                     text-white

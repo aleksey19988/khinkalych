@@ -7,9 +7,9 @@
 </head>
 <body class="bg-gray-800 font-light mb-32">
 <header class="container mx-auto">
-        <div class="flex flex-wrap items-center justify-between mx-auto p-4">
-            <button type="button"
-                    class="
+    <div class="flex flex-wrap items-center justify-between mx-auto p-4">
+        <button type="button"
+                class="
                         w-48
                         h-10
                         text-xl
@@ -32,13 +32,13 @@
                         sm:w-36
                         sm:h-12
                         sm:text-2xl"
-            >
-                Лёша
-            </button>
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="/resources/media/svg/logo_light.svg" class="h-20 sm:h-30 md:h-35" alt="Flowbite Logo"/>
-            </a>
-        </div>
+        >
+            Лёша
+        </button>
+        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="/resources/media/svg/logo_light.svg" class="h-20 sm:h-30 md:h-35" alt="Flowbite Logo"/>
+        </a>
+    </div>
 </header>
 <div class="container px-4 mx-auto">
     <div class="border-line h-px bg-white"></div>
@@ -65,23 +65,76 @@
             dark:border-gray-600"
         >
             <div class="grid h-full max-w-xs grid-cols-3 mx-auto">
-                <button data-tooltip-target="tooltip-wallet" type="button" class="inline-flex flex-col items-center justify-center px-5 group">
+                <button data-tooltip-target="" type="button" class="
+                    transition
+                    ease-in-out
+                    duration-500
+                    inline-flex
+                    flex-col
+                    items-center
+                    justify-center
+                    px-5
+                    group
+                    rounded-xl
+                    @if(str_contains(Route::currentRouteName(), 'seals'))
+                    dark:bg-red-900
+                    hover:bg-red-700
+                    @endif
+                    my-1
+                    mx-2
+                    hover:bg-gray-800"
+                >
                     <a href="{{ route('seals.create') }}">
                         <img src="/resources/media/svg/add_icon.svg" alt="Добавление печати" class="h-8">
                     </a>
-                    <span class="sr-only">Wallet</span>
+                    <span class="sr-only">Добавление печати</span>
                 </button>
-                <button data-tooltip-target="tooltip-wallet" type="button" class="inline-flex flex-col items-center justify-center px-5 group">
+                <button data-tooltip-target="" type="button" class="
+                    transition
+                    ease-in-out
+                    duration-500
+                    inline-flex
+                    flex-col
+                    items-center
+                    justify-center
+                    px-5
+                    group
+                    rounded-xl
+                    @if(str_contains(Route::currentRouteName(), 'profiles'))
+                    dark:bg-red-900
+                    hover:bg-red-700
+                    @endif
+                    my-1
+                    mx-2
+                    hover:bg-gray-800"
+                >
                     <a href="{{ route('profiles.index') }}">
                         <img src="/resources/media/svg/profile_icon.svg" alt="Профиль" class="h-8">
                     </a>
-                    <span class="sr-only">Wallet</span>
+                    <span class="sr-only">Профиль</span>
                 </button>
-                <button data-tooltip-target="tooltip-wallet" type="button" class="inline-flex flex-col items-center justify-center px-5">
+                <button data-tooltip-target="" type="button" class="
+                    transition
+                    ease-in-out
+                    duration-500
+                    inline-flex
+                    flex-col
+                    items-center
+                    justify-center
+                    px-5
+                    rounded-xl
+                    @if(str_contains(Route::currentRouteName(), 'utilities'))
+                    dark:bg-red-900
+                    hover:bg-red-700
+                    @endif
+                    my-1
+                    mx-2
+                    hover:bg-gray-800"
+                >
                     <a href="{{ route('utilities.index') }}">
                         <img src="/resources/media/svg/utilities_icon.svg" alt="Утилиты" class="h-8">
                     </a>
-                    <span class="sr-only">Wallet</span>
+                    <span class="sr-only">Утилиты</span>
                 </button>
             </div>
         </div>
