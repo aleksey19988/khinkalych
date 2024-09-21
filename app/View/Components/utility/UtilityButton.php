@@ -1,17 +1,20 @@
 <?php
 
-namespace App\View\Components\seal;
+namespace App\View\Components\utility;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class AddNameBlock extends Component
+class UtilityButton extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public string $route,
+        public string $title
+    )
     {
         //
     }
@@ -21,6 +24,6 @@ class AddNameBlock extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.seal.add-name-block');
+        return view('components.utility.utility-button');
     }
 }

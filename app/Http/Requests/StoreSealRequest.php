@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * @property int $phone Номер телефона гостя
  * @property string $name Имя гостя
+ * @property int $sealsCount Кол-во печатей, указанное при добавлении клиента
  */
 class StoreSealRequest extends FormRequest
 {
@@ -28,6 +29,7 @@ class StoreSealRequest extends FormRequest
         return [
             'phone' => ['required', 'max:10', 'min:10'],
             'name' => ['nullable'],
+            'sealsCount' => ['nullable'],
         ];
     }
 
@@ -40,15 +42,16 @@ class StoreSealRequest extends FormRequest
     }
 
     /**
-     * Валидация имени гостя при его добавлении
+     * Валидация имени и кол-ва печатей гостя при его добавлении
      *
      * @return array
      */
-    public function validateName(): array
+    public function validateGuestData(): array
     {
         if (strlen($this->name) < 3) {
             return [
                 'success' => false,
+                'attribute' => 'name',
                 'message' => 'Имя слишком короткое (минимум 3 символа)',
             ];
         }
@@ -56,12 +59,25 @@ class StoreSealRequest extends FormRequest
         if (strlen($this->name) > 50) {
             return [
                 'success' => false,
+                'attribute' => 'name',
                 'message' => 'Имя слишком длинное (максимум 50 символов)',
+            ];
+        }
+
+        if (
+            !is_null($this->sealsCount)
+            && !is_numeric($this->sealsCount)
+        ) {
+            return [
+                'success' => false,
+                'attribute' => 'sealsCount',
+                'message' => 'Кол-во должно быть числом',
             ];
         }
 
         return [
             'success' => true,
+            'attribute' => null,
             'message' => null,
         ];
     }

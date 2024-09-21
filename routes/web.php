@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SealController;
+use App\Http\Controllers\Utilities\CheckSealController;
+use App\Http\Controllers\Utilities\GuestEditController;
+use App\Http\Controllers\Utilities\StatisticController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +22,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/utilities/check-seals', [CheckSealController::class, 'index'])->name('utilities.check-seals.index');
+Route::post('/utilities/check-seals', [CheckSealController::class, 'check'])->name('utilities.check-seals.check');
+
+Route::get('/utilities/statistics', [StatisticController::class, 'index'])->name('utilities.statistics.index');
+
+Route::get('/utilities/guest-edit', [GuestEditController::class, 'index'])->name('utilities.guest-edit.index');
+Route::get('/utilities/guest-edit/edit', [GuestEditController::class, 'edit'])->name('utilities.guest-edit.edit');
+Route::put('/utilities/guest-edit/update', [GuestEditController::class, 'update'])->name('utilities.guest-edit.update');
 
 Route::resource('seals', SealController::class);
 Route::resource('profiles', ProfileController::class);

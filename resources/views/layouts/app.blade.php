@@ -8,34 +8,39 @@
 <body class="bg-gray-800 font-light mb-32">
 <header class="container mx-auto">
     <div class="flex flex-wrap items-center justify-between mx-auto p-4">
-        <button type="button"
-                class="
-                        w-48
-                        h-10
-                        text-xl
-                        text-gray-900
-                        bg-white
-                        border
-                        border-gray-300
-                        focus:outline-none
-                        hover:bg-gray-100
-                        focus:ring-4
-                        focus:ring-gray-100
-                        font-normal
-                        rounded-xl
-                        dark:bg-gray-600
-                        dark:text-white
-                        dark:border-gray-600
-                        dark:hover:bg-gray-700
-                        dark:hover:border-gray-600
-                        dark:focus:ring-gray-700
-                        sm:w-36
-                        sm:h-12
-                        sm:text-2xl"
-        >
-            Лёша
-        </button>
-        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="{{ route('profiles.index') }}">
+            <button type="button"
+                    class="
+                    transition
+                    ease-in-out
+                    duration-500
+                    w-36
+                    h-10
+                    text-xl
+                    text-gray-900
+                    bg-white
+                    border
+                    border-gray-300
+                    focus:outline-none
+                    hover:bg-gray-100
+                    focus:ring-4
+                    focus:ring-gray-100
+                    font-normal
+                    rounded-xl
+                    dark:bg-gray-600
+                    dark:text-white
+                    dark:border-gray-600
+                    dark:hover:bg-gray-700
+                    dark:hover:border-gray-600
+                    dark:focus:ring-gray-700
+                    sm:w-36
+                    sm:h-12
+                    sm:text-2xl"
+            >
+                Имя
+            </button>
+        </a>
+        <a href="{{ route('seals.create') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="/resources/media/svg/logo_light.svg" class="h-20 sm:h-30 md:h-35" alt="Flowbite Logo"/>
         </a>
     </div>
@@ -73,10 +78,9 @@
                     flex-col
                     items-center
                     justify-center
-                    px-5
                     group
                     rounded-xl
-                    @if(str_contains(Route::currentRouteName(), 'seals'))
+                    @if(str_contains(Route::currentRouteName(), 'seals') && !str_contains(Route::currentRouteName(), 'check'))
                     dark:bg-red-900
                     hover:bg-red-700
                     @endif
@@ -84,7 +88,7 @@
                     mx-2
                     hover:bg-gray-800"
                 >
-                    <a href="{{ route('seals.create') }}">
+                    <a href="{{ route('seals.create') }}" class="flex w-full h-full items-center justify-center">
                         <img src="/resources/media/svg/add_icon.svg" alt="Добавление печати" class="h-8">
                     </a>
                     <span class="sr-only">Добавление печати</span>
@@ -97,7 +101,6 @@
                     flex-col
                     items-center
                     justify-center
-                    px-5
                     group
                     rounded-xl
                     @if(str_contains(Route::currentRouteName(), 'profiles'))
@@ -108,7 +111,7 @@
                     mx-2
                     hover:bg-gray-800"
                 >
-                    <a href="{{ route('profiles.index') }}">
+                    <a href="{{ route('profiles.index') }}" class="flex w-full h-full items-center justify-center">
                         <img src="/resources/media/svg/profile_icon.svg" alt="Профиль" class="h-8">
                     </a>
                     <span class="sr-only">Профиль</span>
@@ -121,7 +124,6 @@
                     flex-col
                     items-center
                     justify-center
-                    px-5
                     rounded-xl
                     @if(str_contains(Route::currentRouteName(), 'utilities'))
                     dark:bg-red-900
@@ -131,7 +133,7 @@
                     mx-2
                     hover:bg-gray-800"
                 >
-                    <a href="{{ route('utilities.index') }}">
+                    <a href="{{ route('utilities.index') }}" class="flex w-full h-full items-center justify-center">
                         <img src="/resources/media/svg/utilities_icon.svg" alt="Утилиты" class="h-8">
                     </a>
                     <span class="sr-only">Утилиты</span>

@@ -31,6 +31,7 @@ class SealController extends Controller
         return view('seal.create', [
             'seal-is-saved' => false,
             'model' => new Seal(),
+            'title' => 'Добавление печати',
         ]);
     }
 
@@ -51,15 +52,15 @@ class SealController extends Controller
                         'show-name-block' => true
                     ]);
             } else {
-                ['success' => $nameIsValidate, 'message' => $validateNameMessage] = $request->validateName();
-                if (!$nameIsValidate) {
+                ['success' => $dataIsValidate, 'attribute' => $attribute, 'message' => $validateErrorMessage] = $request->validateGuestData();
+                if (!$dataIsValidate) {
                     return back()
                         ->withInput()
-                        ->withErrors(['name' => $validateNameMessage])
+                        ->withErrors([$attribute => $validateErrorMessage])
                         ->with([
                             'success' => false,
                             'show-name-block' => true,
-                            'message' => $validateNameMessage,
+                            'message' => $validateErrorMessage,
                         ]);
                 }
 
@@ -72,9 +73,18 @@ class SealController extends Controller
                         'number' => $request->phone,
                         'guest_id' => $guest->id,
                     ]);
+
+                    if ($request->sealsCount) {
+                        for ($i = 0; $i < $request->sealsCount; $i++) {
+                            Seal::query()->create([
+                                'guest_id' => $guest->id,
+                            ]);
+                        }
+                    }
                     $seal = Seal::query()->create([
                         'guest_id' => $guest->id,
                     ]);
+
                 } catch (\Throwable $th) {
                     DB::rollBack();
                     return back()
@@ -95,6 +105,7 @@ class SealController extends Controller
                         'seal-is-saved' => true,
                         'is-new-guest' => true,
                         'seals-count' => Seal::query()->where(['guest_id' => $guest->id])->count(),
+                        'past-seals-count' => (int)$request->sealsCount,
                         'seal-id' => $seal->id,
                         'guest-name' => $guest->name,
                     ]);
@@ -156,21 +167,33 @@ class SealController extends Controller
      * Отмена добавления печати клиенту (удаление данных о печати)
      * Если во время добавления печати создался новый клиент - он и его номер телефона будут удалены из БД
      *
+     * @param Request $request
      * @param string $id
      * @return RedirectResponse
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
+        DB::beginTransaction();
+
         try {
             $seal = Seal::query()->find($id);
-            if (Seal::query()->where(['guest_id' => $seal->guest_id])->count() === 1) {
+
+            Seal::query()->where(['id' => $id])->delete();
+            if ($request->pastSealsCount) {
+                Seal::query()
+                    ->where('guest_id', $seal->guest->id)
+                    ->orderBy('created_at', 'desc')
+                    ->take($request->pastSealsCount)
+                    ->delete();
+            }
+
+            if (is_null(Seal::query()->where(['guest_id' => $seal->guest->id])->first())) {
                 $guest = $seal->guest;
                 Phone::query()->where(['guest_id' => $guest->id])->delete();
                 Guest::query()->where(['id' => $guest->id])->delete();
-            } else {
-                Seal::query()->where(['id' => $id])->delete();
             }
         } catch (\Throwable $th) {
+            DB::rollBack();
             return back()
                 ->withInput()
                 ->with([
@@ -180,6 +203,8 @@ class SealController extends Controller
                     'error-alert-message' => $th->getMessage(),
                 ]);
         }
+
+        DB::commit();
 
         return redirect(route('seals.create'))
             ->with([

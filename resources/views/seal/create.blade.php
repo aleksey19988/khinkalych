@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Добавление печати')
+@section('title', $title)
 
 @section('content')
-    <h1 class="my-16 text-5xl leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Добавление печати</h1>
+    <x-section-header :title="$title"/>
     @if(session('is-seal-cancel'))
         @if(!session('success'))
             <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
@@ -82,7 +82,7 @@
             dark:placeholder-red-500
             dark:border-red-500
             @enderror"
-{{--               pattern="[0-9]{10}"--}}
+               pattern="[0-9]{10}"
                placeholder="9012345678"
                value="{{ old('phone') }}"
                @if(session('show-name-block')) readonly @endif
@@ -93,7 +93,7 @@
             @enderror
             <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Введи номер телефона в соответствии с форматом</p>
             @if(session('show-name-block'))
-                <x-seal.add-name-block/>
+                <x-seal.add-guest-block/>
             @endif
             <button type="submit" id="add-seal-form-submit-btn" class="
             transition
@@ -166,6 +166,7 @@
                     @csrf
                     @method('delete')
                     <input type="hidden" name="sealId" value="{{ session('seal-id') ?? 0 }}">
+                    <input type="hidden" name="pastSealsCount" value="{{ session('past-seals-count') ?? 0 }}">
                     <button type="submit" class="
                     transition
                     ease-in-out

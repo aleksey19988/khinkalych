@@ -11,7 +11,9 @@ class UtilityController extends Controller
      */
     public function index()
     {
-        //
+        return view('utility.index', [
+            'title' => 'Утилиты'
+        ]);
     }
 
     /**
