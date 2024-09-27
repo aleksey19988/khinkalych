@@ -20,7 +20,9 @@ class SealController extends Controller
      */
     public function index(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('seal.index');
+        return view('seal.index', [
+            'title' => 'Список печатей'
+        ]);
     }
 
     /**

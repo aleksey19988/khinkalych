@@ -48,7 +48,7 @@
         dark:text-red-500
         @enderror"
         >Кол-во печатей</label>
-        <input type="text" id="seals_count" name="sealsCount" value="{{ old('sealsCount') }}" class="
+        <input type="number" id="seals_count" name="sealsCount" value="{{ old('sealsCount') }}" class="
         bg-gray-50
         border
         border-gray-300
